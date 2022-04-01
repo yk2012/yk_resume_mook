@@ -5,7 +5,8 @@
   "description": "简历平台桌面应用。",
   "main": "./app/main/electron.js",
   "scripts": {
-    "start:main": "electron ./app/main/electron.js",
+    "start:main": "webpack --config ./webpack/webpack.main.dev.js && electron ./dist/electron.js",
+    "start:render": "webpack-dev-server --config ./webpack/webpack.render.dev.js",
     "install:electron": "ELECTRON_MIRROR=https://cdn.npm.taobao.org/dist/electron/ npm install electron"
   },
   "dependencies": {
