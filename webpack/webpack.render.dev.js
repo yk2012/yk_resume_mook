@@ -1,33 +1,59 @@
-const path = require("path");
-const webpackMerge = require("webpack-merge");
-const baseConfig = require("./webpack.base.js");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const webpackMerge = require('webpack-merge');
+const baseConfig = require('./webpack.base.js');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const devConfig = {
-  mode: "development",
+  mode: 'development',
   entry: {
     // 👇 对应渲染进程的 app.jsx 入口文件
-    index: path.resolve(__dirname, "../app/renderer/app.jsx"),
+    index: path.resolve(__dirname, '../app/renderer/app.tsx'),
   },
   output: {
-    filename: "[name].[hash].js",
-    path: path.resolve(__dirname, "../dist"),
+    filename: '[name].[hash].js',
+    path: path.resolve(__dirname, '../dist'),
   },
-  target: "electron-renderer",
-  devtool: "inline-source-map",
+  target: 'electron-renderer',
+  devtool: 'inline-source-map',
   devServer: {
-    contentBase: path.join(__dirname, "../dist"),
+    contentBase: path.join(__dirname, '../dist'),
     compress: true,
-    host: "127.0.0.1",
-    port: "7001",
+    host: '127.0.0.1',
+    port: '7001',
     hot: true,
+  },
+  // 👇 追加这段代码，关于Loader与Plugin了解可以去看彩蛋篇
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
+      {
+        test: /\.less$/,
+        exclude: /node_modules/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[name]__[local]__[hash:base64:5]',
+              },
+            },
+          },
+          'postcss-loader',
+          'less-loader',
+        ],
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       // 👇 以此文件为模版，自动生成 HTML
-      template: path.resolve(__dirname, "../app/renderer/index.html"),
-      filename: path.resolve(__dirname, "../dist/index.html"),
-      chunks: ["index"],
+      template: path.resolve(__dirname, '../app/renderer/index.html'),
+      filename: path.resolve(__dirname, '../dist/index.html'),
+      chunks: ['index'],
     }),
   ],
 };

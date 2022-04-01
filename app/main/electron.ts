@@ -4,8 +4,6 @@
 
 import path from "path";
 import { app, BrowserWindow } from "electron";
-// const path = require("path");
-// const { app, BrowserWindow } = require("electron");
 
 function isDev() {
   // 👉 还记得我们配置中通过 webpack.DefinePlugin 定义的构建变量吗
