@@ -1,3 +1,7 @@
+/**
+ * 渲染进程的webpack配置
+ */
+
 const path = require('path');
 const webpackMerge = require('webpack-merge');
 const baseConfig = require('./webpack.base.js');
@@ -6,7 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const devConfig = {
   mode: 'development',
   entry: {
-    // 👇 对应渲染进程的 app.jsx 入口文件
+    // 对应渲染进程的 app.jsx 入口文件
     index: path.resolve(__dirname, '../app/renderer/app.tsx'),
   },
   output: {
@@ -18,8 +22,8 @@ const devConfig = {
   devServer: {
     contentBase: path.join(__dirname, '../dist'),
     compress: true,
-    host: '127.0.0.1',
-    port: '7001',
+    host: '127.0.0.1', // webpack-dev-server启动时要指定ip，不能直接通过localhost启动，不指定会报错
+    port: '7001', // 启动端口为 7001 的服务
     hot: true,
   },
   // 👇 追加这段代码，关于Loader与Plugin了解可以去看彩蛋篇
@@ -50,7 +54,7 @@ const devConfig = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      // 👇 以此文件为模版，自动生成 HTML
+      // 以此文件为模版，自动生成 HTML
       template: path.resolve(__dirname, '../app/renderer/index.html'),
       filename: path.resolve(__dirname, '../dist/index.html'),
       chunks: ['index'],
