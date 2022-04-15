@@ -7,3 +7,7 @@ declare module '*.jpg' {
 declare interface Window {
   pdk: string;
 }
+
+declare module 'rc-redux-model'
+
+declare module 'redux-logger'
