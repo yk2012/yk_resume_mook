@@ -3,8 +3,10 @@ import './index.less'
 import { useHistory } from 'react-router'
 import Logo from '@assets/logo.jpg'
 import { shell } from 'electron'
+
 import { ROUTER_ENTRY, ROUTER_KEY } from '@common/constants/router'
 import { isHttpOrHttpsUrl } from '@common/utils/router'
+
 import { useSelector, useDispatch } from 'react-redux'
 
 function Root() {
